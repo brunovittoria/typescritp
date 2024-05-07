@@ -1,0 +1,21 @@
+
+#1 Iremos usar interface para tipar propriedades recebidas na funcao nome.tsx, exemplo de uso de props no componente HEADER
+
+- Basicamente é usado props para os componentes e onde nos formos usar esses componentes que passamos um valor para esssas props.
+
+#2 States e funcoes no TS + REACT
+
+Quando configurar um estado devemos sempre verificar se o estado foi iniciado, tipagem atual dele e se precisa tipar ele ou nao.
+
+Devemos ter cuidado com o valor presente dentro do (), pois se iniciarmos a useState:
+
+const [nome, setNome] = useState(20)    //O valor inicial dele sera number e quando chamarmos essa useState ira aceitar somente o tipo NUMBER.
+
+Para modificarmos ou adicionar tipos de valores a uma useState basta: 
+
+const [nome, setNome] = useState<string | number>(20)       //Dessa forma aceita 2 types
+
+Porem a melhor forma para tipar as interfaces é usando interface, um exmplo disso esta no file app.tsx onde usamos interface em uma useState
+
+#3 
+
