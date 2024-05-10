@@ -17,5 +17,8 @@ const [nome, setNome] = useState<string | number>(20)       //Dessa forma aceita
 
 Porem a melhor forma para tipar as interfaces é usando interface, um exmplo disso esta no file app.tsx onde usamos interface em uma useState
 
-#3 
+#3 FORMULARIOS COM TS
+
+
+#4 TRABALHANDO COM LISTAS
 

@@ -1,56 +1,73 @@
 import './App.css'
-import { Nome } from './components/nome' //Importamos assim pois nome.tsx esta como: export function Nome ()
+//import { Nome } from './components/nome' //Importamos assim pois nome.tsx esta como: export function Nome ()
 import { Header } from './components/header'
-import { useState } from 'react'
+import { useState, FormEvent, useRef } from 'react'
 
-interface UserProps {
-  nome: string
-  cargo: string
-  salario: number
+interface UserProps{
+  nome: string;
+  cargo: string;
 }
 
+
 function App() {
-  const [nome, setNome] = useState<string>("Sem nome...")
-  const [user, setUser] = useState<UserProps>()
 
-  function mudarNome(){
-    setNome("Bruno Vittoria")
-  }
+  const nameRef = useRef<HTMLInputElement>(null)  //podemos usar o useRef para evitar renderizacoes desnecessarias e assim deixar de usar o useState
+  const [users, setUsers] = useState<UserProps[]>([]) //Iremos criar uma lista agora
+  const cargoRef = useRef<HTMLInputElement>(null)
 
-  function mudarUser() {
-    setUser({
-      nome: "Bruno",
-      cargo: "Developer",
-      salario: 20000
-    })
+  //function trocaValorInput(event: ChangeEvent<HTMLInputElement>){     //Normalmente se tivermos em um projeto grande iremos perceber esse padrao
+    //setInput(event.target.value)
+  //}
+
+  function handleRegister(event: FormEvent) {
+    event.preventDefault()
+
+    if(!nameRef.current?.value || !cargoRef.current?.value ) {
+      alert("PREENCHA OS CAMPOS")
+      return
+    }
+
+    let user = {
+      nome: nameRef.current?.value,
+      cargo: cargoRef.current?.value
+    }
+
+    setUsers(values => [...values, user]) //O ...values serve para que obtenha os valores precedentes que tinham no useState + o valor do name ref
+
+    console.log(nameRef.current?.value)
   }
 
   return (
     <main>
-      <Header nome="TESTE"/>
+      <Header nome="REACT + TYPESCRIPT" description="Alguma Descriçao de teste a"/>
 
-      <Nome aluno="Bruno" idade= {25}/>
-      <Nome aluno="Joyce" idade= {28}/>
-      <Nome aluno="Gigi"  idade= {10}/>
+    <form onSubmit={handleRegister}>
+      <label>NOME: </label>
+      <input
+        type="text"
+        placeholder="Digite seu nome..."
+        ref={nameRef}
+        //onChange={trocaValorInput} //OU = {(event) => setInput(event.target.value)}
+      />
 
-      <h1>BEM VINDO {nome}</h1>
+      <label>CARGO: </label>
+      <input
+        type="text"
+        placeholder="Digite seu cargo..."
+        ref={cargoRef}
+      />
+      
+      <br></br>
+      <button type="submit">CADASTRAR</button>
+    </form>
 
-      <hr/><br/>
-
-      <button onClick={mudarUser}>Alterar User</button>
-
-      <hr/><br/>
-
-      <button onClick={mudarNome}>Alterar Nome</button>
-
-      {/*RESULTADO DO USER ALTERADO PELA USESTATE: */}
-      {user && (
-        <div>
-          <h1>{user.nome}</h1>
-          <p>Salario: {user.salario}</p>
-          <p>Cargo:   {user.cargo}</p>
-        </div>
-      )}
+    {users.map(user => (
+      <div>
+        <br/>
+          <h1>{user.cargo}</h1>
+        <br/>
+      </div>
+    ))}
 
     </main>
   )
